@@ -4,22 +4,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour {
     [System.NonSerialized]
-    public ELEMENTALTYPES SlotOne_ = ELEMENTALTYPES.EMPTY;
-
-    [System.NonSerialized]
-    public ELEMENTALTYPES SlotTwo_ = ELEMENTALTYPES.EMPTY;
-
-    [System.NonSerialized]
-    public ELEMENTALTYPES SlotThree_ = ELEMENTALTYPES.EMPTY;
-
-    [System.NonSerialized]
-    public ELEMENTALTYPES SlotFour_ = ELEMENTALTYPES.EMPTY;
-
-    [System.NonSerialized]
-    public ELEMENTALTYPES SlotFive_ = ELEMENTALTYPES.EMPTY;
-
-    [System.NonSerialized]
-    public int NextFreeSlot_ = 0;
+    public List<ElementTypes> list_ = new List<ElementTypes>();
     // Use this for initialization
     void Start () {
 		

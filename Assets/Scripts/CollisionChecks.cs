@@ -16,10 +16,11 @@ public class CollisionChecks : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var theType = collision.gameObject.GetComponent<ElementTypes>();
-        if (collision.gameObject.GetComponent<ElementTypes>())
+        if (theType)
         {
             TouchingInteractable_ = true;
-            GetComponent<Collection>().TempType_ = theType.type_;
+            var collection = GetComponent<Collection>();
+            collection.TempTypes = theType;
         }
     }
 

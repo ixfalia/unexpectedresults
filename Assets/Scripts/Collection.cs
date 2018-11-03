@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Collection : MonoBehaviour {
     [System.NonSerialized]
-    public ELEMENTALTYPES TempType_ = ELEMENTALTYPES.EMPTY;
+    public ElementTypes TempTypes = null;
+    bool FirstCheck = true;
 	// Use this for initialization
 	void Start () {
 		
@@ -12,37 +13,26 @@ public class Collection : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetAxis("Fire2") > 0.1 && GetComponent<CollisionChecks>().TouchingInteractable_ == true)
+		if(Input.GetAxis("Fire2") > 0.1 && FirstCheck && GetComponent<CollisionChecks>().TouchingInteractable_ == true)
         {
             var inventory = GetComponent<Inventory>();
-            var checker = inventory.NextFreeSlot_;
-
-            if(checker == 0)
+            bool isGoodToAdd = true;
+            for(int i = 0; i < inventory.list_.Count; ++i)
             {
-                inventory.SlotOne_ = TempType_;
+                if(TempTypes.name_ == inventory.list_[i].name_)
+                {
+                    isGoodToAdd = false;
+                }
             }
-            else if (checker == 1)
+            if(isGoodToAdd)
             {
-                inventory.SlotTwo_ = TempType_;
+                inventory.list_.Add(TempTypes);
             }
-            else if (checker == 2)
-            {
-                inventory.SlotThree_ = TempType_;
-            }
-            else if (checker == 3)
-            {
-                inventory.SlotFour_ = TempType_;
-            }
-            else if (checker == 4)
-            {
-                inventory.SlotFive_ = TempType_;
-            }
-            ++checker;
-            if(checker > 4)
-            {
-                checker = 0;
-            }
-            inventory.NextFreeSlot_ = checker;
+            FirstCheck = false;
+        }
+        else if(Input.GetAxis("Fire2") < 0.1)
+        {
+            FirstCheck = true;
         }
 	}
 }

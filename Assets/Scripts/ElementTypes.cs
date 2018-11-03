@@ -5,7 +5,9 @@ using UnityEngine;
 public enum ELEMENTALTYPES { EMPTY, PLANTS, ANIMALS, CELESTIALS, MUSICS, LIGHTS, ARTS};
 
 public class ElementTypes : MonoBehaviour {
-    public ELEMENTALTYPES type_ = ELEMENTALTYPES.EMPTY;
+    public string name_ = "Temp";
+    public List<ELEMENTALTYPES> TypeList_ = new List<ELEMENTALTYPES>();
+
 	// Use this for initialization
 	void Start () {
 		
