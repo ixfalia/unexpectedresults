@@ -13,7 +13,7 @@ public class Collection : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetAxis("Fire2") > 0.1 && FirstCheck && GetComponent<CollisionChecks>().TouchingInteractable_ == true)
+		if(Input.GetAxis("Fire2") > 0.1 && FirstCheck && GetComponent<CollisionChecks>().TouchingElementalInteractable_ == true)
         {
             var inventory = GetComponent<Inventory>();
             bool isGoodToAdd = true;
