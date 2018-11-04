@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ELEMENTALTYPES { EMPTY, PLANTS, ANIMALS, CELESTIALS, MUSICS, LIGHTS, ARTS};
+public enum ELEMENTALTYPES { EMPTY, PLANTS, ANIMALS, CELESTIALS, FOOD, TOOLS, SOUNDS, LIGHTS, ARTS, EMOTIONS, ACTIVITIES, VEHICLE};
 
 public class ElementTypes : MonoBehaviour {
     public string name_ = "Temp";
