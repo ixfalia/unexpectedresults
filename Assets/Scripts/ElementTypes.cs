@@ -7,6 +7,7 @@ public enum ELEMENTALTYPES { EMPTY, PLANTS, ANIMALS, CELESTIALS, FOOD, TOOLS, SO
 public class ElementTypes : MonoBehaviour {
     public string name_ = "Temp";
     public List<ELEMENTALTYPES> TypeList_ = new List<ELEMENTALTYPES>();
+    public Sprite Icon_;
 
 	// Use this for initialization
 	void Start () {
