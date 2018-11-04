@@ -40,6 +40,8 @@ public class CollisionChecks : MonoBehaviour {
         else if (theTeleporter)
         {
             TouchingTeleporterInteractable_ = true;
+            var collection = GetComponent<Collection>();
+            collection.TempPorter = theTeleporter;
             var text = GameObject.Find("ObjectNames");
             text.GetComponent<Text>().text = theTeleporter.name_;
         }
@@ -50,6 +52,18 @@ public class CollisionChecks : MonoBehaviour {
         if (collision.gameObject.GetComponent<ElementTypes>())
         {
             TouchingElementalInteractable_ = false;
+            var text = GameObject.Find("ObjectNames");
+            text.GetComponent<Text>().text = "";
+        }
+        else if (collision.gameObject.GetComponent<Target>())
+        {
+            TouchingPuzzleInteractable_ = false;
+            var text = GameObject.Find("ObjectNames");
+            text.GetComponent<Text>().text = "";
+        }
+        else if (collision.gameObject.GetComponent<Teleporter>())
+        {
+            TouchingTeleporterInteractable_ = false;
             var text = GameObject.Find("ObjectNames");
             text.GetComponent<Text>().text = "";
         }
