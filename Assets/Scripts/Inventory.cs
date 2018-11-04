@@ -27,7 +27,7 @@ public class Inventory : MonoBehaviour {
         
     }
 
-    void Clear()
+    public void Clear()
     {
         list_.Clear();
     }
