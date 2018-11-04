@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Rainbowrize : MonoBehaviour
 {
     [SerializeField]
-    Color changeColor_ = new Color();
+    Color changeColor_ = new Color(0, 0, 0, 1);
 
     [SerializeField]
     float duration_ = 1.0f;
@@ -19,6 +20,7 @@ public class Rainbowrize : MonoBehaviour
     private float elapsed = 0.0f;
     private float counter = 0.0f;
     private float neg = 1.0f;
+    private Color baseColor;
     private Color startingColor;
     private Color targetColor;
     private Dictionary<string, Color> ColorsDict;
@@ -41,7 +43,9 @@ public class Rainbowrize : MonoBehaviour
         ColorList.Add(Color.red);
         ColorList.Add(Color.yellow);
         ColorList.Add(Color.green);
+        ColorList.Add(Color.cyan);
         ColorList.Add(Color.blue);
+        ColorList.Add(Color.magenta);
 
         if (isRainbow_)
         {
@@ -50,7 +54,8 @@ public class Rainbowrize : MonoBehaviour
         else
             targetColor = changeColor_;
 
-        startingColor = GetComponent<Canvas>().color;
+        startingColor = GetComponent<Image>().color;
+        baseColor = startingColor;
 
         colorIterator = ColorList.GetEnumerator();
 	}
@@ -62,13 +67,13 @@ public class Rainbowrize : MonoBehaviour
 
         counter += neg * Time.deltaTime;
         float t = counter / duration_;
-        var spriteRender = GetComponent<>();
-        Color currentColor = spriteRender.color;
+        var spriteRender = GetComponent<Image>();
 
-        if (currentColor != null)
+        if (spriteRender != null)
         {
             Color newColor = Color.Lerp(startingColor, targetColor, t);
-            currentColor = newColor;
+
+            spriteRender.color = newColor;
         }
 
         if( isRainbow_ && counter > duration_ )
@@ -76,6 +81,7 @@ public class Rainbowrize : MonoBehaviour
             ++colorI;
             colorI %= ColorList.Count;
 
+            startingColor = targetColor;
             targetColor = ColorList[colorI];
 
             counter = 0.0f;
@@ -86,9 +92,14 @@ public class Rainbowrize : MonoBehaviour
 
     void checkAndReset(ref float timecounter, ref float duration, ref float neg)
     {
-        if (timecounter >= duration ^ timecounter <= 0.0f)
+        if (timecounter <= 0.0f)
         {
-            //timecounter = 0.0f;
+            neg = -neg;
+            timecounter = 0.0f;
+        }
+        if (timecounter >= duration)
+        {
+            timecounter = duration;
             neg = -neg;
             return;
         }
@@ -96,5 +107,24 @@ public class Rainbowrize : MonoBehaviour
         {
             return;
         }
+    }
+
+    public void changeColor(Color nuColor, float nuDuration = -1.0f)
+    {
+        if (nuDuration >= 0.0f)
+            duration_ = nuDuration;
+
+        startingColor = GetComponent<Image>().color;
+        targetColor = nuColor;
+        counter = 0.0f;
+    }
+
+    public void resetColor(float nuDuration = -1.0f)
+    {
+        if (nuDuration >= 0.0f)
+            duration_ = nuDuration;
+
+        startingColor = GetComponent<Image>().color;
+        targetColor = baseColor;
     }
 }
