@@ -8,6 +8,8 @@ public class CollisionChecks : MonoBehaviour {
     public bool TouchingElementalInteractable_ = false;
     [System.NonSerialized]
     public bool TouchingPuzzleInteractable_ = false;
+    [System.NonSerialized]
+    public bool TouchingTeleporterInteractable_ = false;
 
     // Use this for initialization
     void Start () {
@@ -20,6 +22,7 @@ public class CollisionChecks : MonoBehaviour {
     {
         var theType = collision.gameObject.GetComponent<ElementTypes>();
         var theTarget = collision.gameObject.GetComponent<Target>();
+        var theTeleporter = collision.gameObject.GetComponent<Teleporter>();
         if (theType)
         {
             TouchingElementalInteractable_ = true;
@@ -33,6 +36,12 @@ public class CollisionChecks : MonoBehaviour {
             TouchingPuzzleInteractable_ = true;
             var text = GameObject.Find("ObjectNames");
             text.GetComponent<Text>().text = theTarget.name_;
+        }
+        else if (theTeleporter)
+        {
+            TouchingTeleporterInteractable_ = true;
+            var text = GameObject.Find("ObjectNames");
+            text.GetComponent<Text>().text = theTeleporter.name_;
         }
     }
 
