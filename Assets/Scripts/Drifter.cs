@@ -42,9 +42,9 @@ public class Drifter : MonoBehaviour
             {
                 Vector3 translate = componentTransform.localPosition;
 
-                translate.x = Mathf.Lerp(StartingPosition.x, drift_.x, timeCounters.x);
-                translate.y = Mathf.Lerp(StartingPosition.y, drift_.y, timeCounters.y);
-                translate.z = Mathf.Lerp(StartingPosition.z, drift_.z, timeCounters.z);
+                translate.x = Mathf.Lerp(StartingPosition.x, StartingPosition.x + drift_.x, timeCounters.x);
+                translate.y = Mathf.Lerp(StartingPosition.y, StartingPosition.y + drift_.y, timeCounters.y);
+                translate.z = Mathf.Lerp(StartingPosition.z, StartingPosition.z + drift_.z, timeCounters.z);
 
                 componentTransform.localPosition = translate;
             }//end if
