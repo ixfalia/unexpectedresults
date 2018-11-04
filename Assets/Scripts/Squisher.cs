@@ -36,7 +36,6 @@ public class Squisher : MonoBehaviour
 	{
         timeSince += Time.deltaTime;
         currentTimeState.Set(timeSince, timeSince, timeSince);
-        float neg = -1.0f;
         
         var componentTransform = GetComponent<RectTransform>();
 
@@ -46,20 +45,21 @@ public class Squisher : MonoBehaviour
 
             if (timeSince >= timeoffset_.x)
             {
-                if (isWobble && timeState.x >= timeRate_.x)
-                {
-                    squishRate_.x = -squishRate_.x;
-                }
-
-                scalerate(ref currentScale.x, ref squishRate_.x);
+                scalerate(ref currentScale.x, ref squishRate_.x, timeState.x, ref timeRate_.x);
             }
 
             componentTransform.localScale = currentScale;
         }//endif
 	}// end Update()
 
-    void scalerate(ref float transform, ref float modifier)
+    void scalerate(ref float transform, ref float modifier, float timeState, ref float timeRate)
     {
+        if (isWobble && timeState >= timeRate)
+        {
+            modifier = -modifier;
+            timeRate = 0.0f;
+        }
+
         transform *= modifier;
     }
 }// end class Squisher
