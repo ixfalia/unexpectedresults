@@ -35,6 +35,7 @@ public class Collection : MonoBehaviour {
         else if (Input.GetAxis("Fire2") > 0.1 && FirstCheck && GetComponent<CollisionChecks>().TouchingTeleporterInteractable_ == true)
         {
             TempPorter.Teleport();
+            FirstCheck = false;
         }
         else if (Input.GetAxis("Fire2") < 0.1)
         {
