@@ -1,65 +1,80 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Squisher : MonoBehaviour
 {
     [SerializeField]
-    bool isWobble = false;
+    bool isRepeat = true;
 
     [SerializeField]
-    Vector3 squishRate_ = new Vector3(1, 1, 1), squishAbsolute_ = new Vector3(1, 1, 1);
-
-    //[SerializeField]
-    //Vector2 squishAbsolute_;
+    Vector3 squish_ = new Vector3(0, 0, 0), durations_ = new Vector3(1.0f, 1.0f, 1.0f);
 
     [SerializeField]
-    bool useAbsolute_ = false;
+    float offset_ = 0.0f;
 
-    [SerializeField]
-    Vector3 timeRate_ = new Vector3(0, 0, 0), timeoffset_ = new Vector3(0, 0, 0);
+    private float elapsed = 0.0f;
+    private Vector3 timeCounters = new Vector3(0, 0, 0);
+    private float timeCounter = 0.0f;
+    private Vector3 StartingPosition;
+    private Vector3 negs = new Vector3(1.0f, 1.0f, 1.0f);
+    //private float neg = 1.0f;
 
-    private float timeSince;
-    private Vector3 timeState = new Vector3(0, 0, 0);
-    private Vector3 currentTimeState;
-
-        // Use this for initialization
+    // Use this for initialization
     void Start()
     {
-        timeSince = 0.0f;
-        timeState.Set(0.0f, 0.0f, 0.0f);
+        StartingPosition = GetComponent<RectTransform>().anchoredPosition;
     }
 
-		// Update is called once per frame
-	void Update ()
-	{
-        timeSince += Time.deltaTime;
-        currentTimeState.Set(timeSince, timeSince, timeSince);
-        
-        var componentTransform = GetComponent<RectTransform>();
-
-        if ( componentTransform )
-        {
-            Vector3 currentScale = componentTransform.localScale;
-
-            if (timeSince >= timeoffset_.x)
-            {
-                scalerate(ref currentScale.x, ref squishRate_.x, timeState.x, ref timeRate_.x);
-            }
-
-            componentTransform.localScale = currentScale;
-        }//endif
-	}// end Update()
-
-    void scalerate(ref float transform, ref float modifier, float timeState, ref float timeRate)
+    // Update is called once per frame
+    void Update()
     {
-        if (isWobble && timeState >= timeRate)
-        {
-            modifier = -modifier;
-            timeRate = 0.0f;
-        }
+        //if (!isRepeat && (elapsed > durations_.x || elapsed > durations_.y || elapsed > durations_.z))
+        //    return;
 
-        transform *= modifier;
+        elapsed += Time.deltaTime;
+        float delta = Time.deltaTime;
+
+        timeCounters.x += negs.x * delta;
+        timeCounters.y += negs.y * delta;
+        timeCounters.z += negs.z * delta;
+
+        if (elapsed >= offset_)
+        {
+            var componentTransform = GetComponent<RectTransform>();
+
+            if (componentTransform != null)
+            {
+                Vector3 translate = new Vector3();
+
+                translate.x = Mathf.Lerp(StartingPosition.x, StartingPosition.x + squish_.x, timeCounters.x / durations_.x);
+                translate.y = Mathf.Lerp(StartingPosition.y, StartingPosition.y + squish_.y, timeCounters.y / durations_.y);
+                translate.z = Mathf.Lerp(StartingPosition.z, StartingPosition.z + squish_.z, timeCounters.z / durations_.z);
+
+                componentTransform.anchoredPosition = translate;
+            }//end if
+
+            checkAndReset(ref timeCounters.x, ref durations_.x, ref negs.x);
+            checkAndReset(ref timeCounters.y, ref durations_.y, ref negs.y);
+            checkAndReset(ref timeCounters.z, ref durations_.z, ref negs.z);
+        }//end if
+        else
+        {
+            int flower = 0;
+        }
+    }//end Update()
+
+    void checkAndReset(ref float timecounter, ref float duration, ref float neg)
+    {
+        if (timecounter >= duration ^ timecounter <= 0.0f)
+        {
+            //timecounter = 0.0f;
+            neg = -neg;
+            return;
+        }
+        else
+        {
+            return;
+        }
     }
-}// end class Squisher
+}
